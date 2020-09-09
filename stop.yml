@@ -31,4 +31,3 @@
     yum:
       name: epel-release
       state: absent
-~
