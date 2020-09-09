@@ -1,0 +1,33 @@
+- hosts: all
+  user: root
+  tasks:
+  - name: Add epel-repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install Nginx
+    yum:
+      name: nginx
+      state: present
+
+  - name: add index.html file
+    template:
+      src: /homework/index.jinja
+      dest: /usr/share/nginx/html/index.html
+
+  - name: Open port 80 for http
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+  - name: Restart the firewalld service to load in the firewall changes
+    service:
+      name: firewalld
+      state: restarted
+
+  - name: Start Nginx
+    service:
+      name: nginx
+      state: started
+~
